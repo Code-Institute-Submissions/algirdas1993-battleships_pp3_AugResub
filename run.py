@@ -1,50 +1,89 @@
-from random import randint
+board = [
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+]
 
-COMPUTER_BOARD = [[' '] * 8 for x in range(8)]
-USER_BOARD = [[' '] * 8 for x in range(8)]
+letters_to_numbers = {
+    'A': 0,
+    'B': 1,
+    'C': 2,
+    'D': 3,
+    'E': 4,
+    'F': 5,
+    'G': 6,
+    'H': 7,
+}
 
 
-letters_to_number = {'A': 0, 'B': 1, 'C': 2, 'D': 3,
-                     'E': 4, 'F': 5, 'G': 6, 'H': 7}
+def ask_board_position():
+    column = input("Column (A to H):").upper()
+    while column not in "ABCDEFGH":
+        print("Invalid column! Choose from A, B, C, D, E, F, G, H")
+        column = input("Column (A to H):").upper()
 
+    row = input("Row (1 to 8):")
+    while row not in "12345678":
+        print("Invalid row! Choose from 1, 2, 3, 4, 5, 6, 7, 8")
+        row = input("Row (1 to 8):")
+    return int(row) - 1, letters_to_numbers[column]
 
 def print_game_board(board):
-    print('   A B C D E F G H')
-    print('   ---------------')
+    print(" A B C D E F G H")
+    print(" ---------------")
     row_number = 1
     for row in board:
         print("%d|%s|" % (row_number, "|".join(row)))
-        row_number += 1
-
-def ship_create(board):
-    for ship in range(5):
-        ship_row, ship_column = randint(0, 7), randint(0, 7)
-        while board[ship_row][ship_column] == 'X':
-            ship_row, ship_column = randint(0, 7), randint(0, 7)
-        board[ship_row][ship_column] = "X"
+        print(" ---------------")
+        row_number = row_number + 1
 
 
-def ship_location():
-    row = input('Please enter ship row 1-8')
-    while row not in '12345678':
-        print('Please enter valid number')
-        row = input('Please enter ship row 1-8')
-    column = input('Please enter ship column A-H').upper()
-    while column not in 'ABCDEFGH':
-        print('Please enter valid column letter')
-        column = input('Please enter ship column A-H').upper()
-    return int(row) - 1, letters_to_number[column]
+for n in range(5):
+    print("Where do you want your ship ", n + 1, "?")
+    row_number, column_number = ask_board_position()
 
-def count_hitted_ships():
-    count = 0
-    for row in board:
-        for column in row:
-            if column == 'X':
-                count += 1
-    return count            
+    if board[row_number][column_number] == 'X':
+        print("This spot already has battleship!")
 
-ship_create(COMPUTER_BOARD)
-turns = 10
-print_game_board(COMPUTER_BOARD)
-print_game_board(USER_BOARD)
-# while turns > 0:
+    board[row_number][column_number] = 'X'
+    print_game_board(board)
+
+
+print("\n"*60)
+
+player_board = [
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+]
+
+
+guess = 0
+while guess < 5:
+    print("Guess battleship location on board")
+    row_number, column_number = ask_board_position()
+
+    if player_board[row_number][column_number] != ' ':
+        print("You attacked this place!")
+        continue
+
+    if board[row_number][column_number] == 'X':
+        print("You have successfully hitted the target")
+        player_board[row_number][column_number] = 'X'
+        guess = guess + 1
+    else:
+        player_board[row_number][column_number] = '/'
+        print("You have missed the target!")
+
+    print_game_board(player_board)
+print("GAME OVER")
