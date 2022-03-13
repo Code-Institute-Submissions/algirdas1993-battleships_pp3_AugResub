@@ -1,3 +1,5 @@
+# A board is made out of list of rows. Each row is a list of cells
+# with an 'X' for a battleship or blank ' ' for water.
 board = [
     [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
     [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -9,6 +11,8 @@ board = [
     [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
 ]
 
+# We want to columns by letter, but because Python accesses list by
+# numbers, dictionary needs to be defined, to translate letters to numbers.
 letters_to_numbers = {
     'A': 0,
     'B': 1,
@@ -19,6 +23,8 @@ letters_to_numbers = {
     'G': 6,
     'H': 7,
 }
+
+print("WELCOME TO ULTIME BATTLESHIPS!!!")
 
 
 def ask_board_position():
