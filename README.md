@@ -1,31 +1,67 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Ultimate Battleships
+**Ultimate Battleships** is Python terminal game, which runs in the Code Institute mock terminal in Heroku.
 
-Welcome algirdas1993,
+This game is made, so that two player can play against each other. They take turns, gama host places battleships on the board, after all battleships are placed, player guesses where those ships are on the board.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+[Here is the live version of my **Ultimate Battleships** project](https://battleship1993.herokuapp.com/)
 
-## Reminders
+![Screen sizes](/images/screen.png)
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+## How to play
+My Ultimate Battleships is based on classic battleships game.  
+This version is played:
+- Game host enters five battleship locations 
+- In the board ship location is marked `X`
+- After all ship all placed, player overtakes control and guesses ship locations
+- If player guesses wrong location, on the board it is marked `/`
+- When all five ships are destroyed, game is over
 
-## Creating the Heroku app
+## Features
+### Existing Features
+- Board creation
+ - Ships are placed on board by host manualy:
+  - First host selects column from A to H
+  - Then, selects row from 1 to 8
+  - Repeats this steps five times
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+![Board creation](/images/boardcreation.png)  
 
-1. `heroku/python`
-2. `heroku/nodejs`
+- Player guesses ship location in the same way host creates board
+  - Selects column from A to H
+  - Selects row from 1 to 8
+  - Guessin continues until all five ships are destroyed
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+![Game goal](/images/gameover.png) 
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+- Input validation 
+  - Column input validation is checking for letter from A to H. Ignores if letter is entered in lowercase
 
-Connect your GitHub repository and deploy as normal.
+![Column validation](/images/invalidcolumn.png)
 
-## Constraints
+  - Row validation checks for number in the input
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+![Row validation](/images/invalidcolumn.png)
 
------
-Happy coding!
+### Future Features
+- Add guesses counting
+
+### Testing
+I had manually tested this project by doing following:
+ - Passed the code through a PEP8 Pyhon code checker with no faults
+ - Given invalid inputs: letters and numbers that are out of range
+ - Tested in my local terminal and Code institute Heroku terminal
+
+### Bugs 
+- No bugs were noticed
+
+### Deployment
+This project was deployed using Code Institute's mock terminal for Heroku
+- Steps for deployment:
+   - Fork this repository
+   - Create a new Heroku app
+   - Set the buildbacks to Python and NodeJS in that order
+   - Link the Heroku app to the repository
+   - Click on **Deploy**
+
+### Credits
+- Code Institute for the mock deployment terminal   
