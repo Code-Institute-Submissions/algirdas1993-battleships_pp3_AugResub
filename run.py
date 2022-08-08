@@ -26,6 +26,7 @@ class BattleBoard:
             print("%d|%s|" % (number_of_rows, "|".join(row)))
             number_of_rows += 1
 
+
 class CreateShips:
     def __init__(self, game_board):
         self.game_board = game_board
@@ -39,16 +40,17 @@ class CreateShips:
         return self.game_board
 
     def user_input(self):
+        rows = input("Select row (1 to 8): ")
+        while rows not in "12345678":
+            print("Invalid row")
+            rows = input("Select row (1 to 8): ")
+
         cols = input("Select column (A to H): ").upper()
         while cols not in "ABCDEFGH":
             print("Invalid column")
             cols = input("Select column (A to H): ").upper()
 
-        rows = int(input("Select row (1 to 8): "))
-        while rows not in "12345678":
-            print("Invalid row")
-            rows = int(input("Select row (1 to 8): "))
-        return self.BattleBoard.make_letters_to_integers()[cols], self.rows - 1
+        return int(rows) - 1, BattleBoard.make_letters_to_integers()[cols]
 
     def hit_counter(self):
         hitted_ships = 0
@@ -56,6 +58,37 @@ class CreateShips:
             for column in row:
                 if column == "@":
                     hitted_ships += 1
-        return hitted_ships 
+        return hitted_ships
 
-         
+
+def RunningGame():
+    comp_board = BattleBoard([[" "] * 8 for i in range(8)])
+    user_board = BattleBoard([[" "] * 8 for i in range(8)])
+    CreateShips.set_ships(comp_board)
+    user_turns = 15
+    while user_turns > 0:
+        BattleBoard.board_print(user_board)
+        user_rows, user_cols = CreateShips.user_input(object)
+        while user_board.game_board[user_rows][user_cols] == "-" or user_board.game_board[user_rows][user_cols] == "@":
+            print('You already attacked those coordinates')
+            user_rows, user_cols = CreateShips.user_input(object)
+            if comp_board.game_board[user_rows][user_cols] == "@":
+                print('You have sunk enemies ship')
+                user_board.game_board[user_rows][user_cols] = "@"
+            else:
+                print('You have missed the enemy!')
+                user_board.game_board[user_rows][user_cols] = "/"
+        if CreateShips.hit_counter(user_board) == 5:
+            print('You have destroyed enemies fleet!')
+            break
+        else:
+            user_turns -= 1
+            print(f"You have {user_turns} shells in your disposal!")
+            if user_turns == 0:
+                print('You run out of ammunition')
+                BattleBoard.board_print(user_board)
+                break
+
+
+if __name__ == '__main__':
+    RunningGame()
