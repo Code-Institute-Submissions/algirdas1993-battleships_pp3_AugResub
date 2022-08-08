@@ -40,17 +40,20 @@ class CreateShips:
         return self.game_board
 
     def user_input(self):
-        rows = input("Select row (1 to 8): ")
-        while rows not in "12345678":
-            print("Invalid row")
+        try:
             rows = input("Select row (1 to 8): ")
+            while rows not in '12345678' or rows == "":
+                print("Invalid row")
+                rows = input("Select row (1 to 8): ")
 
-        cols = input("Select column (A to H): ").upper()
-        while cols not in "ABCDEFGH":
-            print("Invalid column")
             cols = input("Select column (A to H): ").upper()
-
-        return int(rows) - 1, BattleBoard.make_letters_to_integers()[cols]
+            while cols not in "ABCDEFGH" or cols == "":
+                print("Invalid column")
+                cols = input("Select column (A to H): ").upper()
+            return int(rows) - 1, BattleBoard.make_letters_to_integers()[cols]
+        except KeyError and ValueError:
+            print('Sorry, You choosen invalid coordinates')
+            return self.user_input()
 
     def hit_counter(self):
         hitted_ships = 0
@@ -68,8 +71,9 @@ def RunningGame():
     user_turns = 15
     while user_turns > 0:
         BattleBoard.board_print(user_board)
+        BattleBoard.board_print(comp_board)
         user_rows, user_cols = CreateShips.user_input(object)
-        while user_board.game_board[user_rows][user_cols] == "-" or user_board.game_board[user_rows][user_cols] == "@":
+        while user_board.game_board[user_rows][user_cols] == "/" or user_board.game_board[user_rows][user_cols] == "@":
             print('You already attacked those coordinates')
             user_rows, user_cols = CreateShips.user_input(object)
             if comp_board.game_board[user_rows][user_cols] == "@":
@@ -83,7 +87,7 @@ def RunningGame():
             break
         else:
             user_turns -= 1
-            print(f"You have {user_turns} shells in your disposal!")
+            print(f"You have {user_turns} shells at your disposal!")
             if user_turns == 0:
                 print('You run out of ammunition')
                 BattleBoard.board_print(user_board)
