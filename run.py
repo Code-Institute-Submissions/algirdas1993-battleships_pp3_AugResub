@@ -41,22 +41,19 @@ class CreateShips:
         return self.game_board
 
     def user_input(self):
-        rows = input("Select row (1 to 8): ")
+        rows = input("Select row coordinates (From 1 to 8): ")
         while rows not in '12345678' or rows == "":
-            print("Invalid row")
+            print("Invalid row coordinates")
             rows = input("Select row (1 to 8): ")
 
-        cols = input("Select column (A to H): ").upper()
+        cols = input("Select column coordinates (From A to H): ").upper()
         while cols not in "ABCDEFGH" or cols == "":
-            print("Invalid column")
+            print("Invalid column coordinates")
             cols = input("Select column (A to H): ").upper()
         return int(rows) - 1, BattleBoard.make_letters_to_integers()[cols]
-        # except KeyError and ValueError:
-        # print('Sorry, You choosen invalid coordinates')
-        # return self.user_input()
 
     def user_name(self):
-        name = input("Enter Your name: ")
+        name = input("Enter Your name: ").capitalize()
         return name
 
     def hit_counter(self):
@@ -73,36 +70,46 @@ def RunningGame():
     user_board = BattleBoard([[" "] * 8 for i in range(8)])
     CreateShips.set_ships(comp_board)
     user_turns = 15
-    print("----------------------------------")
-    print("WELCOME TO ULTIMATE BATTLESHIPS!!!")
-    print("----------------------------------")
+    print("-------------------------------")
+    print("WELCOME TO ULTIMATE BATTLESHIPS")
+    print("-------------------------------")
     user = CreateShips.user_name(object)
-
+    print("\n"*20)
+    print(f"Hello, {user}")
+    print("You have 15 shells at you disposal")
+    print("You need to destroy enemy fleet, made out of 5 ships")
+    print("Good luck!")
     while user_turns > 0:
         BattleBoard.board_print(user_board)
         user_rows, user_cols = CreateShips.user_input(object)
-        while user_board.game_board[user_rows][user_cols] == "/" or user_board.game_board[user_rows][user_cols] == "@":
+        while user_board.game_board[user_rows][user_cols] == "/" or \
+                user_board.game_board[user_rows][user_cols] == "@":
             print('You already attacked these coordinates')
             user_rows, user_cols = CreateShips.user_input(object)
         if comp_board.game_board[user_rows][user_cols] == "@":
             print('You have sunk enemies ship')
             user_board.game_board[user_rows][user_cols] = "@"
         else:
-            print('You have missed the enemis ship!')
+            print('You have missed the enemies ship!')
             user_board.game_board[user_rows][user_cols] = "/"
         if CreateShips.hit_counter(user_board) == 5:
+            print("\n"*20)
             print('You have destroyed enemies fleet!')
+            BattleBoard.board_print(user_board)
             break
         else:
             user_turns -= 1
             print("\n"*20)
             print(f"{user}, you have {user_turns} shells at your disposal!")
-            print(f"You hitted {CreateShips.hit_counter(user_board)} ships out of 5")
+            print(f"You have hitted {CreateShips.hit_counter(user_board)} \
+                ships out of 5")
             if user_turns == 0:
-                print('You run out of ammunition')
+                print("\n"*20)
+                print('You ran out of ammunition')
                 BattleBoard.board_print(user_board)
                 break
 
 
 if __name__ == '__main__':
     RunningGame()
+
