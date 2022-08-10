@@ -1,7 +1,7 @@
 # Ultimate Battleships
 **Ultimate Battleships** is Python terminal game, which runs in the Code Institute mock terminal in Heroku.
 
-This game is made, so that two player can play against each other. They take turns, gama host places battleships on the board, after all battleships are placed, player guesses where those ships are on the board.
+This game is made, so that program randomly places five ship on the board. Then player has 15 turns to guess the coodinates of all five ships.
 
 [Here is the live version of my **Ultimate Battleships** project](https://battleship1993.herokuapp.com/)
 
