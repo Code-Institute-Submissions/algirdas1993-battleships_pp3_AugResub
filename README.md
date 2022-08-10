@@ -5,45 +5,56 @@ This game is made, so that two player can play against each other. They take tur
 
 [Here is the live version of my **Ultimate Battleships** project](https://battleship1993.herokuapp.com/)
 
-![Screen sizes](/images/screen.png)
+![Screen sizes](/images/am_i_responsive.png)
 
 ## How to play
 My Ultimate Battleships is based on classic battleships game.  
 This version is played:
-- Game host enters five battleship locations 
-- In the board ship location is marked `X`
-- After all ship all placed, player overtakes control and guesses ship locations
+- Player enters his/hers name
+- Program randomly places five ships for player to guess the locations of them
+- Board with the placed ships remains hidden from the user
+- User can see the guessing board, remaining turn(shells) and how many ships are hitted
+- User needs to choose row and column coordinates, on which he/she wants to attack
+- In the board hitted ship location is marked `@`
 - If player guesses wrong location, on the board it is marked `/`
-- When all five ships are destroyed, game is over
+- The guessing game continues until player hit all five placed ships or runs out of turns
 
 ## Features
 ### Existing Features
-- Board creation
- - Ships are placed on board by host manualy:
-  - First host selects column from A to H
-  - Then, selects row from 1 to 8
-  - Repeats this steps five times
+- Player name is entered in the beginning of the game
+- Program capitalizes entered name
+- Empty input is not exepted
 
-![Board creation](/images/boardcreation.png)  
+![Player name input](/images/username_input.png)  
 
-- Player guesses ship location in the same way host creates board
-  - Selects column from A to H
-  - Selects row from 1 to 8
-  - Guessin continues until all five ships are destroyed
+- Then program places five ships in random places
+- This board remains hidden from the player
 
-![Game goal](/images/gameover.png) 
+![Hidden board](/images/hidden_comp_board.png) 
 
-- Input validation 
-  - Column input validation is checking for letter from A to H. Ignores if letter is entered in lowercase
+- Player inputs row coordinates on which he/she wants to place his attack. 
+  - Row coordinates input takes in integer from 1 to 8.
+  - Input only except number in the range, does not except empty input.
 
-![Column validation](/images/invalidcolumn.png)
+![Row validation](/images/row_input.png)
 
-  - Row validation checks for number in the input
+- Player inputs column coordinates on which he/she wants to place his attack. 
+  - Column coordinates input takes in letters from A to H 
+  - Input only except letters in that range, is not case sensitive and does not except emty input
 
-![Row validation](/images/invalidcolumn.png)
+![Column validation](/images/column_input.png)
 
-### Future Features
-- Add guesses counting
+- In every turn player is informed about how many turns are left, and how many ships are hitted
+
+![User game progress](/images/player_info.png)
+
+- If player runs out of turns, message is printed with the guessing board
+
+![Loss message](/images/loss.png)
+
+- If player hits all five ships, message is printed with the guessing board
+
+![Loss message](/images/win.png)
 
 ### Testing
 I had manually tested this project by doing following:
@@ -52,7 +63,8 @@ I had manually tested this project by doing following:
  - Tested in my local terminal and Code institute Heroku terminal
 
 ### Bugs 
-- No bugs were noticed
+- Noticed a bug, which made empty input to crash the program. It was fixed 
+by adding extra condition to a while loop. 
 
 ### Deployment
 This project was deployed using Code Institute's mock terminal for Heroku
